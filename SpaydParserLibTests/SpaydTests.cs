@@ -61,7 +61,10 @@ namespace SpaydParserLib.Test
             var result = Spayd.FromString(spaydString);
 
             // Assert
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(expected.Amount, result.Amount);
+            Assert.AreEqual(expected.Vs, result.Vs);
+            Assert.AreEqual(expected.Currency, result.Currency);
+            Assert.AreEqual(expected.BankAccount.Iban, result.BankAccount.Iban);
         }
 
         [TestMethod]
