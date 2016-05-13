@@ -2,6 +2,8 @@
 using System.Linq;
 using NUnit.Framework;
 using SpaydParserLib.Enums;
+using System;
+using System.Globalization;
 
 namespace SpaydParserLib.Test
 {
@@ -184,6 +186,34 @@ namespace SpaydParserLib.Test
             // Assert
             Assert.AreEqual(null, result);
             Assert.IsTrue(parser.GetErrors().Count == 0);
+        }
+
+        [Test]
+        public void TryGetDate_WhenValid([Values("20161216", "19870101")] string value)
+        {
+            // Arrange
+            var parser = new SpaydParser(CreateTestCase("DT", value));
+            var expected = DateTime.ParseExact(value, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+            // Act
+            DateTime? result = parser.TryGetDate();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsTrue(parser.GetErrors().Count == 0);
+        }
+
+        [Test]
+        public void TryGetDate_WhenInvalid([Values("ABCD", "198720101")] string value)
+        {
+            // Arrange
+            var parser = new SpaydParser(CreateTestCase("DT", value));
+
+            // Act
+            DateTime? result = parser.TryGetDate();
+
+            // Assert
+            Assert.IsNull(result);
         }
 
         [Test]
