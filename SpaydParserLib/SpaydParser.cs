@@ -322,6 +322,11 @@ namespace SpaydParserLib
         {
             string origin = _data.ContainsKey("MSG") ? _data["MSG"] : null;
 
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
             if (origin.Length > 60)
             {
                 _errors.Add("MSG is skipped: value canot be longer than 60 characters");
