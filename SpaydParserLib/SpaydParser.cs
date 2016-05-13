@@ -289,7 +289,7 @@ namespace SpaydParserLib
             }
 
             DateTime date;
-            bool isParsed = DateTime.TryParseExact(origin, "YYYYMMDD", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+            bool isParsed = DateTime.TryParseExact(origin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
 
             if (!isParsed)
             {
