@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SpaydParserLib.Enums;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,12 +31,132 @@ namespace SpaydParserLib
 
             if (missingKeys.Any())
             {
-                _errors.Add("Some required parameter in SIND is missing: " + string.Join(", ", missingKeys));
+                _errors.Add("Required parameters in SIND are missing: " + string.Join(", ", missingKeys));
 
                 return false;
             }
 
             return true;
+        }
+
+        public string TryGetId()
+        {
+            string origin = _data.ContainsKey("ID") ? _data["ID"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                _errors.Add("Incorrect ID.");
+
+                return "";
+            }
+
+            if (origin.Length > 40)
+            {
+                _errors.Add("ID too long. Max length is 40 characters.");
+
+                return "";
+            }
+
+            return origin;
+        }
+
+        public DateTime TryGetIssuedDate()
+        {
+            string origin = _data.ContainsKey("DD") ? _data["DD"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                _errors.Add("Issued date (DD) vale cannot be empty.");
+
+                return DateTime.MinValue;
+            }
+
+            DateTime date;
+            bool isParsed = DateTime.TryParseExact(origin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+
+            if (!isParsed)
+            {
+                _errors.Add("Issued date (DD) value is invalid.");
+
+                return DateTime.MinValue;
+            }
+
+            return date;
+        }
+
+        public double TryGetAmount()
+        {
+            string origin = _data.ContainsKey("AM") ? _data["AM"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return 0; //TODO: neplatná hodnota
+            }
+
+            if (origin.Length > 18)
+            {
+                _errors.Add("AM is ignored: max length is exceeded");
+                return 0; //TODO: neplatná hodnota
+            }
+
+            double num;
+            var parseResult = double.TryParse(origin, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"), out num);
+
+            if (!parseResult)
+            {
+                _errors.Add("Amount (AM) value is invalid.");
+                return num; //TODO: neplatná hodnota
+            }
+
+            return num;
+        }
+
+        public TaxPerformance? TryGetTaxPerformance()
+        {
+            string origin = _data.ContainsKey("TP") ? _data["TP"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return 0;
+            }
+
+            int originInt;
+            var isValid = Int32.TryParse(origin, out originInt);
+
+            if (!isValid || originInt > 2 || originInt < 0)
+            {
+                _errors.Add("Tax performance (TP) value is invalid. Must be 0, 1 or 2.");
+
+                return 0;
+            }
+
+            return (TaxPerformance)originInt;
+        }
+
+        public string TryGetCurrency()
+        {
+            string origin = _data.ContainsKey("CC") ? _data["CC"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            if (origin.Length != 3)
+            {
+                _errors.Add("CC is ignored: string length should be exactly 3 chars");
+
+                return null;
+            }
+
+            if (!StaticLists.Iso4217Currencies.Select(x => x.ToLowerInvariant()).Contains(origin.ToLowerInvariant()))
+            {
+                _errors.Add("CC is ignored: currency code is not valid ISO 4217 currency code");
+
+                return null;
+            }
+
+            return origin;
         }
     }
 }
