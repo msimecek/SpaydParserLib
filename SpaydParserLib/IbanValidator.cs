@@ -6,7 +6,7 @@ namespace SpaydParserLib
 {
     public class IbanValidator
     {
-        private static Dictionary<string, int> _countries = new Dictionary<string, int>()
+        private static readonly Dictionary<string, int> Countries = new Dictionary<string, int>()
         {
             {"AL", 28}, // Albania
             {"AD", 24},	// Andorra
@@ -126,15 +126,14 @@ namespace SpaydParserLib
             }
 
             string countryCode = matches[0].Groups[1].Value;
-            string checksum = matches[0].Groups[2].Value;
 
-            if (!_countries.ContainsKey(countryCode))
+            if (!Countries.ContainsKey(countryCode))
             {
                 // unknown country
                 return false;
             }
 
-            if (_countries[countryCode] != iban.Length)
+            if (Countries[countryCode] != iban.Length)
             {
                 // wrong length for this country
                 return false;
@@ -142,16 +141,16 @@ namespace SpaydParserLib
 
             string switchedString = $"{iban.Substring(4)}{iban.Substring(0, 4)}";
 
-            return validateMod97(switchedString);
+            return ValidateMod97(switchedString);
         }
 
-        private static bool validateMod97(string str)
+        private static bool ValidateMod97(string str)
         {
             int length = str.Length;
             int checkSum = 0;
             for (int index = 0; index < length; index++)
             {
-                int value = integerValue(str[index]);
+                int value = IntegerValue(str[index]);
                 if (value < 10)
                 {
                     checkSum = (10 * checkSum) + value;
@@ -170,7 +169,7 @@ namespace SpaydParserLib
             return result == 1;
         }
 
-        private static int integerValue(char ch)
+        private static int IntegerValue(char ch)
         {
             if (ch >= '0' && ch <= '9')
             {
