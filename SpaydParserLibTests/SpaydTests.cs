@@ -8,17 +8,12 @@ namespace SpaydParserLib.Test
     public class SpaydTests
     {
         [TestMethod]
-        public void Parse_Valid_SampleSpayd()
+        public void Parse_Valid_MinimalisticSpayd()
         {
             // prepare
-            string spaydString = "SPD*1.0*ACC:CZ2806000000000168540115*AM:450.00*CC:CZK*MSG:PLATBA ZA ZBOZI*X-VS:1234567890";
+            string spaydString = "SPD*1.0*ACC:CZ2806000000000168540115";
             Spayd expected = new Spayd()
             {
-                Amount = 450,
-                Currency = "CZK",
-                Message = "PLATBA ZA ZBOZI",
-                Vs = 1234567890,
-                NotificationChannel = NotificationChannel.Email,
                 BankAccount = new BankAccount
                 {
                     Iban = "CZ2806000000000168540115"
@@ -29,8 +24,9 @@ namespace SpaydParserLib.Test
             Spayd result = Spayd.FromString(spaydString);
 
             // assert
-            Assert.AreEqual(expected.BankAccount.GetHashCode(), result.BankAccount.GetHashCode());
+            Assert.AreEqual(expected.BankAccount.AccountNumber, result.BankAccount.AccountNumber);
         }
+
 
         [TestMethod]
         public void Parse_Valid_MinimalSpayd()
