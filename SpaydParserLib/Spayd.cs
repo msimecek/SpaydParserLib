@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 
 namespace SpaydParserLib
 {
+    // Short Payment Descriptor
     public class Spayd
     {
         // 1.0*

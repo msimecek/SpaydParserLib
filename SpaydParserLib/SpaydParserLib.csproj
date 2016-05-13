@@ -39,10 +39,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BankAccount.cs" />
+    <Compile Include="Enums\InvoiceTypes.cs" />
     <Compile Include="Enums\NotificationChannels.cs" />
+    <Compile Include="Enums\TaxPerformances.cs" />
     <Compile Include="IbanValidator.cs" />
     <Compile Include="InvalidFormatException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sind.cs" />
+    <Compile Include="SindParser.cs" />
     <Compile Include="Spayd.cs" />
     <Compile Include="SpaydParser.cs" />
     <Compile Include="StaticLists.cs" />
