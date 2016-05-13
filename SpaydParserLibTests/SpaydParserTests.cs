@@ -175,7 +175,7 @@ namespace SpaydParserLib.Test
         }
 
         [Test]
-        public void TryGetCurrency_WhenValid()
+        public void TryGetCurrency_WhenInvalid()
         {
             // Arrange
             SpaydParser parser = new SpaydParser(CreateTestCase("AV", "XYZ"));
