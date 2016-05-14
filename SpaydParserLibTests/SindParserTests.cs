@@ -46,7 +46,7 @@ namespace SpaydParserLib.Test
             var result = parser.TryGetTaxPerformance();
 
             // Assert
-            Assert.IsTrue(parser.GetErrors().Count > 0);
+            Assert.AreEqual(TaxPerformance.Common, result);
         }
 
         [Test]
