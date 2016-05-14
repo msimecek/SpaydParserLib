@@ -66,6 +66,7 @@
     <Compile Include="StringExtensionsTests.cs" />
     <Compile Include="IbanValidatorTests.cs" />
     <Compile Include="SindParserTests.cs" />
+    <Compile Include="SindTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpaydParserLib\SpaydParserLib.csproj">
