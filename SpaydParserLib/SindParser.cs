@@ -383,5 +383,26 @@ namespace SpaydParserLib
             return originDouble;
         }
 
+        public int TryGetForeignCurrencyAmount()
+        {
+            string origin = _data.ContainsKey("FXA") ? _data["FXA"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return 1;
+            }
+
+            int originInt;
+            bool parsed = int.TryParse(origin, out originInt);
+
+            if (!parsed)
+            {
+                _errors.Add("Foreign currency amount (FXA) value is invalid. Should be an integer.");
+
+                return 1;
+            }
+
+            return originInt;
+        }
     }
 }
