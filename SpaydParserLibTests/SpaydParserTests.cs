@@ -222,7 +222,7 @@ namespace SpaydParserLib.Test
         {
             // Arrange
             Spayd sp = Spayd.FromString("SPD*1.0*ACC:CZ2806000000000168540115*AM:450.00*CC:CZK*MSG:PLATBA ZA ZBOZI*X-VS:1234567890");
-            string expected = "{\"ProtocolVersion\":null,\"BankAccount\":{\"AccountPrefix\":null,\"AccountNumber\":null,\"BankCode\":null,\"Iban\":\"CZ2806000000000168540115\",\"Bic\":null},\"Amount\":450.0,\"Currency\":\"CZK\",\"RecipientReference\":null,\"RecipientName\":null,\"Date\":null,\"PaymentType\":null,\"Message\":\"PLATBA ZA ZBOZI\",\"Crc32\":null,\"NotificationChannel\":null,\"NotificationContact\":null,\"PaymentRepeat\":0,\"Vs\":1234567890,\"Ss\":null,\"Ks\":null,\"Identifier\":null,\"Url\":null}";
+            string expected = "{\"ProtocolVersion\":\"1.0\",\"BankAccount\":{\"AccountPrefix\":null,\"AccountNumber\":null,\"BankCode\":null,\"Iban\":\"CZ2806000000000168540115\",\"Bic\":null},\"Amount\":450.0,\"Currency\":\"CZK\",\"RecipientReference\":null,\"RecipientName\":null,\"Date\":null,\"PaymentType\":null,\"Message\":\"PLATBA ZA ZBOZI\",\"Crc32\":null,\"NotificationChannel\":null,\"NotificationContact\":null,\"PaymentRepeat\":0,\"Vs\":1234567890,\"Ss\":null,\"Ks\":null,\"Identifier\":null,\"Url\":null}";
 
             // Act
             var result = sp.GetJson();
