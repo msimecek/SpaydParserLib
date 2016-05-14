@@ -28,7 +28,7 @@ namespace SpaydParserLib.Test
             SindParser parser = new SindParser(CreateTestCase("TP", value));
 
             // Act
-            TaxPerformance expected = (TaxPerformance)Int32.Parse(value);
+            TaxPerformance expected = (TaxPerformance)int.Parse(value);
             var result = parser.TryGetTaxPerformance();
 
             // Assert
@@ -46,6 +46,47 @@ namespace SpaydParserLib.Test
 
             // Assert
             Assert.IsTrue(parser.GetErrors().Count > 0);
+        }
+
+        [Test]
+        public void TryGetInvoiceType_WhenValid([Values("0", "1", "5", "9")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("TD", value));
+
+            // Act
+            var result = parser.TryGetInvoiceType();
+            InvoiceType expected = (InvoiceType)int.Parse(value);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void TryGetInvoiceType_WhenInvalid([Values("ABC", "123.4", "-2", "6")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("TD", value));
+
+            // Act
+            var result = parser.TryGetInvoiceType();
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void TryGetInvoiceType_WhenNullOrEmpty([Values(null, "")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("TD", value));
+
+            // Act
+            var result = parser.TryGetInvoiceType();
+            var expected = InvoiceType.Other;
+
+            // Assert
+            Assert.AreEqual(expected, result);
         }
 
         private Dictionary<string, string> CreateTestCase(string key, string value)

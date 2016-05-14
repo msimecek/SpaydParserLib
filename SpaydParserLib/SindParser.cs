@@ -133,6 +133,27 @@ namespace SpaydParserLib
             return (TaxPerformance)originInt;
         }
 
+        public InvoiceType? TryGetInvoiceType()
+        {
+            var origin = _data.ContainsKey("TD") ? _data["TD"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return InvoiceType.Other;
+            }
+
+            int originInt;
+            if (Int32.TryParse(origin, out originInt) && originInt >= 0 && (originInt == 9 || originInt <= 5))
+            {
+                return (InvoiceType)originInt;
+            }
+            else
+            {
+                _errors.Add("Invoice type (TD) is invalid. Must be 0, 1, 2, 3, 4, 5 or 9.");
+                return null;
+            }
+        }
+
         public string TryGetCurrency()
         {
             string origin = _data.ContainsKey("CC") ? _data["CC"] : null;
@@ -158,5 +179,7 @@ namespace SpaydParserLib
 
             return origin;
         }
+
+
     }
 }
