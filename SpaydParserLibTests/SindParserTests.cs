@@ -2,6 +2,7 @@
 using SpaydParserLib.Enums;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace SpaydParserLib.Test
 {
@@ -212,6 +213,93 @@ namespace SpaydParserLib.Test
 
             // Assert
             Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void TryGetTaxPerformanceDate_WhenValid()
+        {
+            // Arrange
+            var parser = new SindParser(CreateTestCase("DUZP", "20161216"));
+            var expected = new DateTime(2016, 12, 16);
+
+            // Act
+            DateTime? result = parser.TryGetTaxPerformanceDate();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsTrue(parser.GetErrors().Count == 0);
+        }
+
+        [Test]
+        public void TryGetTaxPerformanceDate_WhenInvalid([Values("ABCD", "198720101")] string value)
+        {
+            // Arrange
+            var parser = new SindParser(CreateTestCase("DUZP", value));
+
+            // Act
+            DateTime? result = parser.TryGetTaxPerformanceDate();
+
+            // Assert
+            Assert.IsNull(result);
+            Assert.IsTrue(parser.GetErrors().Count > 0);
+        }
+
+        [Test]
+        public void TryGetTaxStatementDueDate_WhenValid()
+        {
+            // Arrange
+            var parser = new SindParser(CreateTestCase("DPPD", "20161201"));
+            var expected = new DateTime(2016, 12, 01);
+
+            // Act
+            DateTime? result = parser.TryGetTaxStatementDueDate();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsTrue(parser.GetErrors().Count == 0);
+        }
+
+        [Test]
+        public void TryGetTaxStatementDueDate_WhenInvalid([Values("ABCD", "198720101")] string value)
+        {
+            // Arrange
+            var parser = new SindParser(CreateTestCase("DPPD", value));
+
+            // Act
+            DateTime? result = parser.TryGetTaxStatementDueDate();
+
+            // Assert
+            Assert.IsNull(result);
+            Assert.IsTrue(parser.GetErrors().Count > 0);
+        }
+
+        [Test]
+        public void TryGetDueDate_WhenValid()
+        {
+            // Arrange
+            var parser = new SindParser(CreateTestCase("DT", "20161201"));
+            var expected = new DateTime(2016, 12, 01);
+
+            // Act
+            DateTime? result = parser.TryGetDueDate();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsTrue(parser.GetErrors().Count == 0);
+        }
+
+        [Test]
+        public void TryGetDueDate_WhenInvalid([Values("ABCD", "198720101")] string value)
+        {
+            // Arrange
+            var parser = new SindParser(CreateTestCase("DT", value));
+
+            // Act
+            DateTime? result = parser.TryGetDueDate();
+
+            // Assert
+            Assert.IsNull(result);
+            Assert.IsTrue(parser.GetErrors().Count > 0);
         }
 
         private Dictionary<string, string> CreateTestCase(string key, string value)

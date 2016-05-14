@@ -233,6 +233,72 @@ namespace SpaydParserLib
             return origin;
         }
 
+        public DateTime? TryGetTaxPerformanceDate()
+        {
+            string origin = _data.ContainsKey("DUZP") ? _data["DUZP"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            DateTime date;
+            bool isParsed = DateTime.TryParseExact(origin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+
+            if (!isParsed)
+            {
+                _errors.Add("Tax performance date (DUZP) value is invalid.");
+
+                return null;
+            }
+
+            return date;
+        }
+
+        public DateTime? TryGetTaxStatementDueDate()
+        {
+            string origin = _data.ContainsKey("DPPD") ? _data["DPPD"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            DateTime date;
+            bool isParsed = DateTime.TryParseExact(origin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+
+            if (!isParsed)
+            {
+                _errors.Add("Tax statment due date (DPPD) value is invalid.");
+
+                return null;
+            }
+
+            return date;
+        }
+
+        public DateTime? TryGetDueDate()
+        {
+            string origin = _data.ContainsKey("DT") ? _data["DT"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            DateTime date;
+            bool isParsed = DateTime.TryParseExact(origin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+
+            if (!isParsed)
+            {
+                _errors.Add("Due date (DT) value is invalid.");
+
+                return null;
+            }
+
+            return date;
+        }
+
         public string TryGetCurrency()
         {
             string origin = _data.ContainsKey("CC") ? _data["CC"] : null;
