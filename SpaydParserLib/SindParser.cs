@@ -299,6 +299,35 @@ namespace SpaydParserLib
             return date;
         }
 
+        private double? TryGetT(string whichT)
+        {
+            string origin = _data.ContainsKey(whichT) ? _data[whichT] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            if (origin.Length > 18)
+            {
+                _errors.Add($"{whichT} value is invalid. Should not be longer than 18 characters.");
+
+                return null;
+            }
+
+            double originDouble;
+            bool parsed = double.TryParse(origin, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"), out originDouble);
+
+            if (!parsed) //TODO: check for max 2 decimal digits
+            {
+                _errors.Add($"{whichT} value is invalid. Should be a decimal number max 18 characters long, with max 2 decimals.");
+
+                return null;
+            }
+
+            return originDouble;
+        }
+
         public string TryGetCurrency()
         {
             string origin = _data.ContainsKey("CC") ? _data["CC"] : null;
