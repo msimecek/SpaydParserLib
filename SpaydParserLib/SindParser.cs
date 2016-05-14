@@ -205,6 +205,13 @@ namespace SpaydParserLib
             return symbol;
         }
 
+        public string TryGetIssuerVatIdentification()
+        {
+            string origin = _data.ContainsKey("VII") ? _data["VII"] : null;
+
+            return origin;
+        }
+
         public string TryGetCurrency()
         {
             string origin = _data.ContainsKey("CC") ? _data["CC"] : null;

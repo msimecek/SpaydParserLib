@@ -158,6 +158,20 @@ namespace SpaydParserLib.Test
             Assert.IsNull(result);
         }
 
+        [Test]
+        public void TryGetIssuerVatIdentification_WhenValid([Values("CZ12345678", "CY99999999L", "DK99999999")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("VII", value));
+
+            // Act
+            var result = parser.TryGetIssuerVatIdentification();
+            string expected = value;
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
         private Dictionary<string, string> CreateTestCase(string key, string value)
         {
             return new Dictionary<string, string> { { key, value } };
