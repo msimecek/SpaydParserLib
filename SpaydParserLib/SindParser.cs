@@ -435,5 +435,43 @@ namespace SpaydParserLib
 
             return bankAccount;
         }
+
+        public string TryGetSoftware()
+        {
+            string origin = _data.ContainsKey("X-SW") ? _data["X-SW"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            if (origin.Length > 30)
+            {
+                _errors.Add("Software (X-SW) value is invalid. Cannot be longer than 30 characters.");
+
+                return null;
+            }
+
+            return origin;
+         }
+
+        public string TryGetUrl()
+        {
+            string origin = _data.ContainsKey("X-URL") ? _data["X-URL"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            if (origin.Length > 70)
+            {
+                _errors.Add("URL (X-URL) value is invalid. Cannot be longer than 70 characters.");
+
+                return null;
+            }
+
+            return origin;
+        }
     }
 }
