@@ -171,7 +171,7 @@ namespace SpaydParserLib
             }
 
             double num;
-            double.TryParse(origin, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"), out num);
+            double.TryParse(origin, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, new CultureInfo("en-US"), out num);
 
             return num;
         }

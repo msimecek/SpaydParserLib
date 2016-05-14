@@ -98,7 +98,7 @@ namespace SpaydParserLib
             }
 
             double num;
-            var parseResult = double.TryParse(origin, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"), out num);
+            var parseResult = double.TryParse(origin, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, new CultureInfo("en-US"), out num);
 
             if (!parseResult)
             {
@@ -312,7 +312,7 @@ namespace SpaydParserLib
             }
 
             double originDouble;
-            bool parsed = double.TryParse(origin, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"), out originDouble);
+            bool parsed = double.TryParse(origin, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, new CultureInfo("en-US"), out originDouble);
 
             if (!parsed) //TODO: check for max 2 decimal digits
             {
@@ -367,7 +367,7 @@ namespace SpaydParserLib
             }
 
             double originDouble;
-            bool parsed = double.TryParse(origin, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"), out originDouble);
+            bool parsed = double.TryParse(origin, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, new CultureInfo("en-US"), out originDouble);
 
             if (!parsed) //TODO: check for max 3 decimal digits
             {
