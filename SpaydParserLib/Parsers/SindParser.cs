@@ -123,8 +123,6 @@ namespace SpaydParserLib
 
             if (!isValid || originInt > 2 || originInt < 0)
             {
-                _errors.Add("Tax performance (TP) value is invalid. Must be 0, 1 or 2.");
-
                 return 0;
             }
 
