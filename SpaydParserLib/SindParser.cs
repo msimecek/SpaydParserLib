@@ -404,5 +404,36 @@ namespace SpaydParserLib
 
             return originInt;
         }
+
+        public BankAccount TryGetBankAccount()
+        {
+            string origin = _data.ContainsKey("ACC") ? _data["ACC"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            string[] fragments = origin.Split(',');
+            var ibanWithBic = fragments[0];
+
+            string[] ibanBic = ibanWithBic.Split('+');
+
+            string iban = ibanBic[0];
+            if (!IbanValidator.Validate(iban))
+            {
+                _errors.Add("Bank account (ACC) value is invalid. IBAN is not valid.");
+                return null;
+            }
+
+            BankAccount bankAccount = new BankAccount { Iban = iban };
+
+            if (ibanBic.Length == 2)
+            {
+                bankAccount.Bic = ibanBic[1];
+            }
+
+            return bankAccount;
+        }
     }
 }

@@ -120,7 +120,7 @@ namespace SpaydParserLib
 
         // ACC:CZ5855000000001265098001+RZBCCZPP*
         // max 46 chars
-        public BankAccount Account { get; set; }
+        public BankAccount BankAccount { get; set; }
 
         // X-SW:E-FAKTURANT V5.3*
         // max 30 chars
