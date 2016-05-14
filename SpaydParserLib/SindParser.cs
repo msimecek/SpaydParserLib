@@ -66,7 +66,7 @@ namespace SpaydParserLib
 
             if (string.IsNullOrEmpty(origin))
             {
-                _errors.Add("Issued date (DD) vale cannot be empty.");
+                _errors.Add("Issued date (DD) value cannot be empty.");
 
                 return DateTime.MinValue;
             }
