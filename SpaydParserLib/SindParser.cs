@@ -354,6 +354,34 @@ namespace SpaydParserLib
             return origin;
         }
 
+        public double? TryGetExchangeRate()
+        {
+            string origin = _data.ContainsKey("FX") ? _data["FX"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            if (origin.Length > 18)
+            {
+                _errors.Add("Exchange rate (FX) value is invalid. Should not be longer than 18 characters.");
+
+                return null;
+            }
+
+            double originDouble;
+            bool parsed = double.TryParse(origin, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"), out originDouble);
+
+            if (!parsed) //TODO: check for max 3 decimal digits
+            {
+                _errors.Add("Exchange rate (FX) value is invalid. Should be a decimal number max 18 characters long, with max 3 decimals.");
+
+                return null;
+            }
+
+            return originDouble;
+        }
 
     }
 }
