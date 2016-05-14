@@ -89,6 +89,46 @@ namespace SpaydParserLib.Test
             Assert.AreEqual(expected, result);
         }
 
+        [Test]
+        public void TryAdvancesSettlement_WhenValid([Values("0", "1")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("SA", value));
+
+            // Act
+            var result = parser.TryGetAdvancesSettlement();
+            bool expected = value == "0" ? false : true;
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void TryAdvancesSettlement_WhenInvalid([Values("2", "asdm")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("SA", value));
+
+            // Act
+            var result = parser.TryGetAdvancesSettlement();
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void TryAdvancesSettlement_WhenNullOrEmpty([Values(null, "")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("SA", value));
+
+            // Act
+            var result = parser.TryGetAdvancesSettlement();
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
         private Dictionary<string, string> CreateTestCase(string key, string value)
         {
             return new Dictionary<string, string> { { key, value } };

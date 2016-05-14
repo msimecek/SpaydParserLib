@@ -154,6 +154,30 @@ namespace SpaydParserLib
             }
         }
 
+        public bool? TryGetAdvancesSettlement()
+        {
+            string origin = _data.ContainsKey("SA") ? _data["SA"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return false;
+            }
+
+            if (origin == "0")
+            {
+                return false;
+            }
+            else if (origin == "1")
+            {
+                return true;
+            }
+            else
+            {
+                _errors.Add("Advances settlement (SA) value is invalid. Must be 0 or 1.");
+                return null;
+            }
+        }
+
         public string TryGetCurrency()
         {
             string origin = _data.ContainsKey("CC") ? _data["CC"] : null;
