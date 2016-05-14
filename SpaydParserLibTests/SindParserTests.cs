@@ -172,6 +172,48 @@ namespace SpaydParserLib.Test
             Assert.AreEqual(expected, result);
         }
 
+        [Test]
+        public void TryGetIssuerIdentificationNumber_WhenValid([Values("12345678")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("INI", value));
+
+            // Act
+            var result = parser.TryGetIssuerIdentificationNumber();
+            string expected = value;
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void TryGetRecipientVatIdentification_WhenValid([Values("CZ12345678", "CY99999999L", "DK99999999")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("VIR", value));
+
+            // Act
+            var result = parser.TryGetRecipientVatIdentification();
+            string expected = value;
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void TryGetRecipientIdentificationNumber_WhenValid([Values("12345678")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("INR", value));
+
+            // Act
+            var result = parser.TryGetRecipientIdentificationNumber();
+            string expected = value;
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
         private Dictionary<string, string> CreateTestCase(string key, string value)
         {
             return new Dictionary<string, string> { { key, value } };

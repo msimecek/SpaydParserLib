@@ -212,6 +212,27 @@ namespace SpaydParserLib
             return origin;
         }
 
+        public string TryGetIssuerIdentificationNumber()
+        {
+            string origin = _data.ContainsKey("INI") ? _data["INI"] : null;
+
+            return origin;
+        }
+
+        public string TryGetRecipientVatIdentification()
+        {
+            string origin = _data.ContainsKey("VIR") ? _data["VIR"] : null;
+
+            return origin;
+        }
+
+        public string TryGetRecipientIdentificationNumber()
+        {
+            string origin = _data.ContainsKey("INR") ? _data["INR"] : null;
+
+            return origin;
+        }
+
         public string TryGetCurrency()
         {
             string origin = _data.ContainsKey("CC") ? _data["CC"] : null;
