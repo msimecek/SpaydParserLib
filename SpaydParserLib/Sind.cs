@@ -78,31 +78,31 @@ namespace SpaydParserLib
         public DateTime? DueDate { get; set; } // datum splatnosti celkové částky
 
         // TB0:3000*
-        // max 18 numbers total, max 2 decimal, dot delimiter
+        // max 18 characters total, max 2 decimal, dot delimiter
         public double? TB0 { get; set; }
 
         // T0:630*
-        // max 18 numbers total, max 2 decimal, dot delimiter
+        // max 18 characters total, max 2 decimal, dot delimiter
         public double? T0 { get; set; }
 
         // TB1:2000*
-        // max 18 numbers total, max 2 decimal, dot delimiter
+        // max 18 characters total, max 2 decimal, dot delimiter
         public double? TB1 { get; set; }
 
         // T1:300*
-        // max 18 numbers total, max 2 decimal, dot delimiter
+        // max 18 characters total, max 2 decimal, dot delimiter
         public double? T1 { get; set; }
 
         // TB2:1000*
-        // max 18 numbers total, max 2 decimal, dot delimiter
+        // max 18 characters total, max 2 decimal, dot delimiter
         public double? TB2 { get; set; }
 
         // T2:100*
-        // max 18 numbers total, max 2 decimal, dot delimiter
+        // max 18 characters total, max 2 decimal, dot delimiter
         public double? T2 { get; set; }
 
         // NTB:500*
-        // max 18 numbers total, max 2 decimal, dot delimiter
+        // max 18 characters total, max 2 decimal, dot delimiter
         public double? NTB { get; set; }
 
         // CC:CZK*
@@ -110,7 +110,7 @@ namespace SpaydParserLib
         public string Currency { get; set; }
 
         // FX:123456.789*
-        // max 18 numbers total, max 3 decimal, dot delimiter
+        // max 18 characters total, max 3 decimal, dot delimiter
         public double? ExchangeRate { get; set; }
 
         // FXA:100*
