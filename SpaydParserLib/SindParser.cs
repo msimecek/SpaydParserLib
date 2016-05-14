@@ -178,6 +178,33 @@ namespace SpaydParserLib
             }
         }
 
+        public long? TryGetVariableSymbol()
+        {
+            string origin = _data.ContainsKey("VS") ? _data["VS"] : null;
+
+            if (string.IsNullOrEmpty(origin))
+            {
+                return null;
+            }
+
+            if (origin.Length > 10)
+            {
+                _errors.Add("Variable symbol (VS) value is invalid. Max length is exceeded, should not be longer than 10 characters.");
+                return null;
+            }
+
+            long symbol;
+            bool isParsed = long.TryParse(origin, out symbol);
+
+            if (!isParsed)
+            {
+                _errors.Add("Variable symbol (VS) value is invalid. Value canot be parsed.");
+                return null;
+            }
+
+            return symbol;
+        }
+
         public string TryGetCurrency()
         {
             string origin = _data.ContainsKey("CC") ? _data["CC"] : null;

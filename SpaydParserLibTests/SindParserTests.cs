@@ -113,6 +113,7 @@ namespace SpaydParserLib.Test
             var result = parser.TryGetAdvancesSettlement();
 
             // Assert
+            Assert.IsTrue(parser.GetErrors().Count > 0);
             Assert.IsNull(result);
         }
 
@@ -127,6 +128,34 @@ namespace SpaydParserLib.Test
 
             // Assert
             Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void TryGetVariableSymbol_WhenValid([Values("1234567890")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("VS", value));
+
+            // Act
+            var result = parser.TryGetVariableSymbol();
+            long expected = 1234567890;
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void TryGetVariableSymbol_WhenInvalid([Values("ABCDE", "123456789012", "123.22")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("VS", value));
+
+            // Act
+            var result = parser.TryGetVariableSymbol();
+
+            // Assert
+            Assert.IsTrue(parser.GetErrors().Count > 0);
+            Assert.IsNull(result);
         }
 
         private Dictionary<string, string> CreateTestCase(string key, string value)
