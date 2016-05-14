@@ -52,5 +52,70 @@ namespace SpaydParserLib.Test
             Assert.AreEqual(expected.Currency, result.Currency);
             Assert.AreEqual(expected.BankAccount.Iban, result.BankAccount.Iban);
         }
+
+        [TestMethod]
+        public void Parse_Valid_Max()
+        {
+            /*
+             SID*1.0*ID:2001401154*DD:20140404*TP:9*AM:61189.00*VS:3310001054*VII:CZ25568736*INI:25568736*INR:25568736*VIR:CZ25568736*DUZP:20140404*DT:20140412*TB0:26492.70*T0:5563.47*TB1:25333.10*T1:3799.97*NTB:-0.24*CC:CZK*TD:0*SA:0*ACC:CZ9701000000007098760287+KOMBCZPP*X-SW:MoneyS5-1.7.1* 
+             */
+
+            // Arrange
+            string source = "SID*1.0*ID:2001401154*DD:20140404*TP:9*AM:61189.00*VS:3310001054*VII:CZ25568736*INI:25568736*INR:25568736*VIR:CZ25568736*DUZP:20140404*DT:20140412*TB0:26492.70*T0:5563.47*TB1:25333.10*T1:3799.97*NTB:-0.24*CC:CZK*TD:0*SA:0*ACC:CZ9701000000007098760287+KOMBCZPP*X-SW:MoneyS5-1.7.1*";
+            Sind expected = new Sind()
+            {
+                Id = "2001401154",
+                IssuedDate = new DateTime(2014, 4, 4),
+                TaxPerformance = Enums.TaxPerformance.Common,
+                Amount = 61189,
+                Vs = 3310001054,
+                IssuerVatIdentification = "CZ25568736",
+                IssuerIdentificationNumber = "25568736",
+                RecipientIdentificationNumber = "25568736",
+                RecipientVatIdentification = "CZ25568736",
+                TaxPerformanceDate = new DateTime(2014, 4, 4),
+                DueDate = new DateTime(2014, 4, 12),
+                TB0 = 26492.70,
+                T0 = 5563.47,
+                TB1 = 25333.10,
+                T1 = 3799.97,
+                NTB = -0.24,
+                Currency = "CZK",
+                InvoiceType = Enums.InvoiceType.NonTax,
+                AdvancesSettlement = false,
+                BankAccount = new BankAccount()
+                {
+                    Iban = "CZ9701000000007098760287",
+                    Bic = "KOMBCZPP"
+                },
+                Software = "MoneyS5-1.7.1"
+            };
+
+            // Act
+            Sind result = Sind.FromString(source);
+
+            // Assert
+            Assert.AreEqual(expected.Id, result.Id);
+            Assert.AreEqual(expected.IssuedDate, result.IssuedDate);
+            Assert.AreEqual(expected.TaxPerformance, result.TaxPerformance);
+            Assert.AreEqual(expected.Amount, result.Amount);
+            Assert.AreEqual(expected.Vs, result.Vs);
+            Assert.AreEqual(expected.IssuerVatIdentification, result.IssuerVatIdentification);
+            Assert.AreEqual(expected.IssuerIdentificationNumber, result.IssuerIdentificationNumber);
+            Assert.AreEqual(expected.RecipientVatIdentification, result.RecipientVatIdentification);
+            Assert.AreEqual(expected.RecipientIdentificationNumber, result.RecipientIdentificationNumber);
+            Assert.AreEqual(expected.TaxPerformanceDate, result.TaxPerformanceDate);
+            Assert.AreEqual(expected.DueDate, result.DueDate);
+            Assert.AreEqual(expected.TB0, result.TB0);
+            Assert.AreEqual(expected.T0, result.T0);
+            Assert.AreEqual(expected.TB1, result.TB1);
+            Assert.AreEqual(expected.T1, result.T1);
+            Assert.AreEqual(expected.NTB, result.NTB);
+            Assert.AreEqual(expected.Currency, result.Currency);
+            Assert.AreEqual(expected.InvoiceType, result.InvoiceType);
+            Assert.AreEqual(expected.AdvancesSettlement, result.AdvancesSettlement);
+            Assert.AreEqual(expected.BankAccount.Iban, result.BankAccount.Iban);
+            Assert.AreEqual(expected.BankAccount.Bic, result.BankAccount.Bic);
+        }
     }
 }
