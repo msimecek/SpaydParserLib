@@ -229,9 +229,9 @@ namespace SpaydParserLib
             return origin;
         }
 
-        public DateTime? TryGetTaxPerformanceDate()
+        public DateTime? TryGetDate(string key, string name)
         {
-            string origin = _data.ContainsKey("DUZP") ? _data["DUZP"] : null;
+            string origin = _data.ContainsKey(key) ? _data[key] : null;
 
             if (string.IsNullOrEmpty(origin))
             {
@@ -243,51 +243,7 @@ namespace SpaydParserLib
 
             if (!isParsed)
             {
-                _errors.Add("Tax performance date (DUZP) value is invalid.");
-
-                return null;
-            }
-
-            return date;
-        }
-
-        public DateTime? TryGetTaxStatementDueDate()
-        {
-            string origin = _data.ContainsKey("DPPD") ? _data["DPPD"] : null;
-
-            if (string.IsNullOrEmpty(origin))
-            {
-                return null;
-            }
-
-            DateTime date;
-            bool isParsed = DateTime.TryParseExact(origin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-
-            if (!isParsed)
-            {
-                _errors.Add("Tax statment due date (DPPD) value is invalid.");
-
-                return null;
-            }
-
-            return date;
-        }
-
-        public DateTime? TryGetDueDate()
-        {
-            string origin = _data.ContainsKey("DT") ? _data["DT"] : null;
-
-            if (string.IsNullOrEmpty(origin))
-            {
-                return null;
-            }
-
-            DateTime date;
-            bool isParsed = DateTime.TryParseExact(origin, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
-
-            if (!isParsed)
-            {
-                _errors.Add("Due date (DT) value is invalid.");
+                _errors.Add($"{name} ({key}) value is invalid.");
 
                 return null;
             }

@@ -224,7 +224,7 @@ namespace SpaydParserLib.Test
             var expected = new DateTime(2016, 12, 16);
 
             // Act
-            DateTime? result = parser.TryGetTaxPerformanceDate();
+            DateTime? result = parser.TryGetDate("DUZP", "Tax performance date");
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -238,7 +238,7 @@ namespace SpaydParserLib.Test
             var parser = new SindParser(CreateTestCase("DUZP", value));
 
             // Act
-            DateTime? result = parser.TryGetTaxPerformanceDate();
+            DateTime? result = parser.TryGetDate("DUZP", "Tax performance date");
 
             // Assert
             Assert.IsNull(result);
@@ -253,7 +253,7 @@ namespace SpaydParserLib.Test
             var expected = new DateTime(2016, 12, 01);
 
             // Act
-            DateTime? result = parser.TryGetTaxStatementDueDate();
+            DateTime? result = parser.TryGetDate("DPPD", "Tax statement due date");
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -267,7 +267,7 @@ namespace SpaydParserLib.Test
             var parser = new SindParser(CreateTestCase("DPPD", value));
 
             // Act
-            DateTime? result = parser.TryGetTaxStatementDueDate();
+            DateTime? result = parser.TryGetDate("DPPD", "Tax statement due date");
 
             // Assert
             Assert.IsNull(result);
@@ -282,7 +282,7 @@ namespace SpaydParserLib.Test
             var expected = new DateTime(2016, 12, 01);
 
             // Act
-            DateTime? result = parser.TryGetDueDate();
+            DateTime? result = parser.TryGetDate("DT", "Due date");
 
             // Assert
             Assert.AreEqual(expected, result);
@@ -296,7 +296,7 @@ namespace SpaydParserLib.Test
             var parser = new SindParser(CreateTestCase("DT", value));
 
             // Act
-            DateTime? result = parser.TryGetDueDate();
+            DateTime? result = parser.TryGetDate("DT", "Due date");
 
             // Assert
             Assert.IsNull(result);
