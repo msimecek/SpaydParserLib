@@ -4,6 +4,7 @@ using NUnit.Framework;
 using SpaydParserLib.Enums;
 using System;
 using System.Globalization;
+using SpaydParserLib.Descriptors;
 
 namespace SpaydParserLib.Test
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using SpaydParserLib.Enums;
 using Newtonsoft.Json;
 
-namespace SpaydParserLib
+namespace SpaydParserLib.Descriptors
 {
     // Short Payment Descriptor
     public class Spayd
@@ -96,6 +96,8 @@ namespace SpaydParserLib
 
             spaydData = spaydData.Replace("SPD*", string.Empty);
 
+            string protocolVersion = spaydData.Substring(0, spaydData.IndexOf('*'));
+
             Dictionary<string, string> data = spaydData.ExtractValuePairs('*', ':', true);
 
             var parser = new SpaydParser(data);
@@ -124,7 +126,7 @@ namespace SpaydParserLib
                 RecipientReference = parser.TryGetRecipientReference(),
                 Ss = parser.TryGetSpecificSymbol(),
                 Url = parser.TryGetUrl(),
-                ProtocolVersion = null
+                ProtocolVersion = protocolVersion
             };
 
             var errors = parser.GetErrors();

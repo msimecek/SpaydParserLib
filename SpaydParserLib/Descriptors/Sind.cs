@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SpaydParserLib
+namespace SpaydParserLib.Descriptors
 {
     // Short Invoice Descriptor
     public class Sind
@@ -138,6 +138,8 @@ namespace SpaydParserLib
 
             sindData = sindData.Replace("SID*", string.Empty);
 
+            string protocolVersion = sindData.Substring(0, sindData.IndexOf('*'));
+
             Dictionary<string, string> data = sindData.ExtractValuePairs('*', ':', true);
 
             var parser = new SindParser(data);
@@ -176,7 +178,7 @@ namespace SpaydParserLib
                 BankAccount = parser.TryGetBankAccount(),
                 Software = parser.TryGetSoftware(),
                 Url = parser.TryGetUrl(),
-                ProtocolVersion = null
+                ProtocolVersion = protocolVersion
             };
 
             var errors = parser.GetErrors();

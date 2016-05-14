@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SpaydParserLib.Enums;
+using SpaydParserLib.Descriptors;
 
 namespace SpaydParserLib.Test
 {
