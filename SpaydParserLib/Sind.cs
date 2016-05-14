@@ -1,9 +1,8 @@
-﻿using SpaydParserLib.Enums;
+﻿using Newtonsoft.Json;
+using SpaydParserLib.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpaydParserLib
 {
@@ -129,5 +128,74 @@ namespace SpaydParserLib
         // X-URL:HTTP://E-FAKTURANT.CZ/INV/ABCD123456789EFG.ISDOC*
         // max 70 chars
         public string Url { get; set; }
+
+        public static Sind FromString(string sindData)
+        {
+            if (!sindData.StartsWith("SID"))
+            {
+                throw new InvalidFormatException("Required parameter SID not found.");
+            }
+
+            sindData = sindData.Replace("SID*", string.Empty);
+
+            Dictionary<string, string> data = sindData.ExtractValuePairs('*', ':', true);
+
+            var parser = new SindParser(data);
+
+            if (!parser.ContainsAllRequiredKeys())
+            {
+                throw new InvalidFormatException("Required parameters in SIND not found.");
+            }
+
+            var sind = new Sind
+            {
+                Id = parser.TryGetId(),
+                IssuedDate = parser.TryGetIssuedDate(),
+                Amount = parser.TryGetAmount(),
+                TaxPerformance = parser.TryGetTaxPerformance(),
+                InvoiceType = parser.TryGetInvoiceType(),
+                AdvancesSettlement = parser.TryGetAdvancesSettlement(),
+                Vs = parser.TryGetVariableSymbol(),
+                IssuerVatIdentification = parser.TryGetIssuerVatIdentification(),
+                IssuerIdentificationNumber = parser.TryGetIssuerIdentificationNumber(),
+                RecipientVatIdentification = parser.TryGetRecipientVatIdentification(),
+                RecipientIdentificationNumber = parser.TryGetRecipientIdentificationNumber(),
+                TaxPerformanceDate = parser.TryGetTaxPerformanceDate(),
+                TaxStatementDueDate = parser.TryGetTaxStatementDueDate(),
+                DueDate = parser.TryGetDueDate(),
+                TB0 = parser.TryGetT("TB0"),
+                T0 = parser.TryGetT("T0"),
+                TB1 = parser.TryGetT("TB1"),
+                T1 = parser.TryGetT("T1"),
+                TB2 = parser.TryGetT("TB2"),
+                T2 = parser.TryGetT("T2"),
+                NTB = parser.TryGetT("NTB"),
+                Currency = parser.TryGetCurrency(),
+                ExchangeRate = parser.TryGetExchangeRate(),
+                ForeignCurrencyAmount = parser.TryGetForeignCurrencyAmount(),
+                BankAccount = parser.TryGetBankAccount(),
+                Software = parser.TryGetSoftware(),
+                Url = parser.TryGetUrl(),
+                ProtocolVersion = null
+            };
+
+            var errors = parser.GetErrors();
+            if (errors.Any())
+            {
+                throw new InvalidFormatException(string.Join(", ", errors));
+            }
+
+            return sind;
+        }
+
+        public string GetJson()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+        public string GetXml()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

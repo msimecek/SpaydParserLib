@@ -299,7 +299,7 @@ namespace SpaydParserLib
             return date;
         }
 
-        private double? TryGetT(string whichT)
+        public double? TryGetT(string whichT)
         {
             string origin = _data.ContainsKey(whichT) ? _data[whichT] : null;
 
