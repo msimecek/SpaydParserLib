@@ -3,8 +3,10 @@ Knihovna pro parsování řetězce SPAYD (Short Payment Descriptor) nebo SIND (S
 
 ## Použití
 
-`csharp
+```csharp
 Spayd result = Spayd.FromString(spaydString);
+```
 
+```csharp
 Sind result = Sind.FromString(sindString);
-`
+```
