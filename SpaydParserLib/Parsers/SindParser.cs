@@ -171,7 +171,7 @@ namespace SpaydParserLib
             }
             else
             {
-                _errors.Add("Advances settlement (SA) value is invalid. Must be 0 or 1.");
+                _errors.Add("Advances settlement (SA) value is invalid. Must be 0, 1 or nothing.");
                 return null;
             }
         }
