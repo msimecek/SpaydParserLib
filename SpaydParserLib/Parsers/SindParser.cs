@@ -147,7 +147,7 @@ namespace SpaydParserLib
             }
             else
             {
-                _errors.Add("Invoice type (TD) is invalid. Must be 0, 1, 2, 3, 4, 5 or 9.");
+                _errors.Add("Invoice type (TD) is invalid. Must be 0, 1, 2, 3, 4, 5, 9 or nothing.");
                 return null;
             }
         }
