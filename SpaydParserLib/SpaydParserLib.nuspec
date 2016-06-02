@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>SpaydParserLib</id>
+        <version>1.0.2</version>
+        <title>Short Payment Descriptor library</title>
+        <authors>Martin Simecek,Miroslav Holec</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Library for parsing the Short Payment Descriptor (SPAYD) and Short Invoice Descriptor (SIND) format as used in the QR Platba &amp; QR Faktura standards.</description>
+        <language>en-US</language>
+        <dependencies>
+            <dependency id="Newtonsoft.Json" version="8.0.3" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="D:\Source\CSW\SpaydParser\SpaydParserLib\SpaydParserLib\bin\Release\SpaydParserLib.dll" target="lib\portable-net45+wp7+win8\SpaydParserLib.dll" />
+        <file src="D:\Source\CSW\SpaydParser\SpaydParserLib\SpaydParserLib\bin\Release\SpaydParserLib.dll" target="lib\uap10.0\SpaydParserLib.dll" />
+    </files>
+</package>
