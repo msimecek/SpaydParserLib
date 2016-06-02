@@ -90,6 +90,34 @@ namespace SpaydParserLib.Test
         }
 
         [Test]
+        public void TryGetAmount_WhenValid()
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("AM", "123456789.45"));
+            double expected = 123456789.45;
+
+            // Act
+            var result = parser.TryGetAmount();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void TryGetAmount_WhenValidNegative()
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("AM", "-123456789.45"));
+            double expected = -123456789.45;
+
+            // Act
+            var result = parser.TryGetAmount();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
         public void TryGetAmount_WhenInvalid([Values("1A23")] string value)
         {
             // Arrange
@@ -97,6 +125,19 @@ namespace SpaydParserLib.Test
 
             // Act
             var amount = parser.TryGetAmount();
+
+            // Assert
+            Assert.IsTrue(parser.GetErrors().Count > 0);
+        }
+
+        [Test]
+        public void TryGetAmount_WhenNullOrEmpty([Values(null, "")] string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("AM", value));
+
+            // Act
+            var result = parser.TryGetAmount();
 
             // Assert
             Assert.IsTrue(parser.GetErrors().Count > 0);

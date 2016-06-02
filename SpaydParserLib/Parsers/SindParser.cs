@@ -88,12 +88,13 @@ namespace SpaydParserLib
 
             if (string.IsNullOrEmpty(origin))
             {
+                _errors.Add("Amount (AM) is required and cannot be null.");
                 return 0; //TODO: neplatná hodnota
             }
 
             if (origin.Length > 18)
             {
-                _errors.Add("AM is ignored: max length is exceeded");
+                _errors.Add("Amount (AM) cannot be longer than 18 characters.");
                 return 0; //TODO: neplatná hodnota
             }
 
@@ -103,7 +104,7 @@ namespace SpaydParserLib
             if (!parseResult)
             {
                 _errors.Add("Amount (AM) value is invalid.");
-                return num; //TODO: neplatná hodnota
+                return 0; //TODO: neplatná hodnota
             }
 
             return num;
