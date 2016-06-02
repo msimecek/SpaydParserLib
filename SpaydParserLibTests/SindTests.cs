@@ -130,6 +130,28 @@ namespace SpaydParserLib.Test
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidFormatException))]
+        public void Parse_IssedDateMissing()
+        {
+            // Arrange
+            string source = "SID*1.0*ID:2001401154*TP:0*AM:61189.00*VS:3310001054*VII:CZ25568736*INI:25568736*INR:25568736*VIR:CZ25568736*DUZP:20140404*DT:20140412*TB0:26492.70*T0:5563.47*TB1:25333.10*T1:3799.97*NTB:-0.24*CC:CZK*TD:0*SA:0*ACC:CZ9701000000007098760287+KOMBCZPP*X-SW:MoneyS5-1.7.1*";
+
+            // Act
+            var result = Sind.FromString(source);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidFormatException))]
+        public void Parse_AmountMissing()
+        {
+            // Arrange
+            string source = "SID*1.0*ID:2001401154*DD:20140404*TP:0*VS:3310001054*VII:CZ25568736*INI:25568736*INR:25568736*VIR:CZ25568736*DUZP:20140404*DT:20140412*TB0:26492.70*T0:5563.47*TB1:25333.10*T1:3799.97*NTB:-0.24*CC:CZK*TD:0*SA:0*ACC:CZ9701000000007098760287+KOMBCZPP*X-SW:MoneyS5-1.7.1*";
+
+            // Act
+            var result = Sind.FromString(source);
+        }
+
+        [TestMethod]
         public void GetJson()
         {
             // Arrange
