@@ -207,7 +207,7 @@ namespace SpaydParserLib.Test
             var result = parser.TryGetInvoiceType();
 
             // Assert
-            Assert.IsNull(result);
+            Assert.IsTrue(parser.GetErrors().Count > 0);
         }
 
         [Test]
