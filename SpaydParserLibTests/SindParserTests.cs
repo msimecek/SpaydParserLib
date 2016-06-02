@@ -50,6 +50,46 @@ namespace SpaydParserLib.Test
         }
 
         [Test]
+        public void TryGetIssuedDate_WhenValid()
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("DD", "20160615"));
+            DateTime expected = new DateTime(2016, 6, 15);
+
+            // Act
+            var result = parser.TryGetIssuedDate();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void TryGetIssuedDate_WhenEmpty()
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("DD", ""));
+
+            // Act
+            var result = parser.TryGetIssuedDate();
+
+            // Assert
+            Assert.IsTrue(parser.GetErrors().Count > 0);
+        }
+
+        [Test]
+        public void TryGetIssuedDate_WhenInvalidDate()
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("DD", "2016adc12"));
+
+            // Act
+            var result = parser.TryGetIssuedDate();
+
+            // Assert
+            Assert.IsTrue(parser.GetErrors().Count > 0);
+        }
+
+        [Test]
         public void TryGetAmount_WhenInvalid([Values("1A23")] string value)
         {
             // Arrange
