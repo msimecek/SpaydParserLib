@@ -61,7 +61,7 @@ namespace SpaydParserLib.Test
              */
 
             // Arrange
-            string source = "SID*1.0*ID:2001401154*DD:20140404*TP:9*AM:61189.00*VS:3310001054*VII:CZ25568736*INI:25568736*INR:25568736*VIR:CZ25568736*DUZP:20140404*DT:20140412*TB0:26492.70*T0:5563.47*TB1:25333.10*T1:3799.97*NTB:-0.24*CC:CZK*TD:0*SA:0*ACC:CZ9701000000007098760287+KOMBCZPP*X-SW:MoneyS5-1.7.1*";
+            string source = "SID*1.0*ID:2001401154*DD:20140404*TP:0*AM:61189.00*VS:3310001054*VII:CZ25568736*INI:25568736*INR:25568736*VIR:CZ25568736*DUZP:20140404*DT:20140412*TB0:26492.70*T0:5563.47*TB1:25333.10*T1:3799.97*NTB:-0.24*CC:CZK*TD:0*SA:0*ACC:CZ9701000000007098760287+KOMBCZPP*X-SW:MoneyS5-1.7.1*";
             Sind expected = new Sind()
             {
                 Id = "2001401154",
@@ -116,6 +116,17 @@ namespace SpaydParserLib.Test
             Assert.AreEqual(expected.AdvancesSettlement, result.AdvancesSettlement);
             Assert.AreEqual(expected.BankAccount.Iban, result.BankAccount.Iban);
             Assert.AreEqual(expected.BankAccount.Bic, result.BankAccount.Bic);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidFormatException))]
+        public void Parse_IdMissing()
+        {
+            // Arrange
+            string source = "SID*1.0*DD:20140404*TP:0*AM:61189.00*VS:3310001054*VII:CZ25568736*INI:25568736*INR:25568736*VIR:CZ25568736*DUZP:20140404*DT:20140412*TB0:26492.70*T0:5563.47*TB1:25333.10*T1:3799.97*NTB:-0.24*CC:CZK*TD:0*SA:0*ACC:CZ9701000000007098760287+KOMBCZPP*X-SW:MoneyS5-1.7.1*";
+
+            // Act
+            var result = Sind.FromString(source);
         }
 
         [TestMethod]
