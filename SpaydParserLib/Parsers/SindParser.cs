@@ -196,7 +196,7 @@ namespace SpaydParserLib
 
             if (!isParsed)
             {
-                _errors.Add("Variable symbol (VS) value is invalid. Value canot be parsed.");
+                _errors.Add("Variable symbol (VS) value is invalid. Unable to parse the value.");
                 return null;
             }
 

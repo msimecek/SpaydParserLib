@@ -294,6 +294,19 @@ namespace SpaydParserLib.Test
         }
 
         [Test]
+        public void TryGetVariableSymbol_WhenNullOrEmpty([Values(null, "")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("VS", value));
+
+            // Act
+            var result = parser.TryGetVariableSymbol();
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
         public void TryGetIssuerVatIdentification_WhenValid([Values("CZ12345678", "CY99999999L", "DK99999999")]string value)
         {
             // Arrange
