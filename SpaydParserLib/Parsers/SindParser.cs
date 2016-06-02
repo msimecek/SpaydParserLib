@@ -43,7 +43,7 @@ namespace SpaydParserLib
 
             if (string.IsNullOrEmpty(origin))
             {
-                _errors.Add("Incorrect ID.");
+                _errors.Add("ID cannot be empty.");
 
                 return "";
             }
