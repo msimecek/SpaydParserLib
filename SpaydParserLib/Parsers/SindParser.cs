@@ -116,7 +116,7 @@ namespace SpaydParserLib
 
             if (string.IsNullOrEmpty(origin))
             {
-                return 0;
+                return TaxPerformance.Common;
             }
 
             int originInt;
@@ -124,7 +124,8 @@ namespace SpaydParserLib
 
             if (!isValid || originInt > 2 || originInt < 0)
             {
-                return 0;
+                _errors.Add("Tax Performance (TP) value is invalid. Expected: 0, 1, 2 or nothing.");
+                return null;
             }
 
             return (TaxPerformance)originInt;

@@ -167,6 +167,19 @@ namespace SpaydParserLib.Test
             var result = parser.TryGetTaxPerformance();
 
             // Assert
+            Assert.IsTrue(parser.GetErrors().Count > 0);
+        }
+
+        [Test]
+        public void TryGetTaxPerformance_WhenNullOrEmpty([Values(null, "")]string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("TP", value));
+
+            // Act
+            var result = parser.TryGetTaxPerformance();
+
+            // Assert
             Assert.AreEqual(TaxPerformance.Common, result);
         }
 
