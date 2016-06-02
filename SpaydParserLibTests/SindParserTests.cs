@@ -11,6 +11,45 @@ namespace SpaydParserLib.Test
     public class SindParserTests
     {
         [Test]
+        public void TryGetId_WhenValid([Values("ABCD123456789EF", "ABCD122aC3456789EF")] string value)
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("ID", value));
+
+            // Act
+            var id = parser.TryGetId();
+
+            // Assert
+            Assert.AreEqual(value, id);
+        }
+
+        [Test]
+        public void TryGetId_WhenEmpty()
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("ID", ""));
+
+            // Act
+            var id = parser.TryGetId();
+
+            // Assert
+            Assert.IsTrue(parser.GetErrors().Count > 0);
+        }
+
+        [Test]
+        public void TryGetId_WhenTooLong()
+        {
+            // Arrange
+            SindParser parser = new SindParser(CreateTestCase("ID", new string('A', 41)));
+
+            // Act
+            var id = parser.TryGetId();
+
+            // Assert
+            Assert.IsTrue(parser.GetErrors().Count > 0);
+        }
+
+        [Test]
         public void TryGetAmount_WhenInvalid([Values("1A23")] string value)
         {
             // Arrange
