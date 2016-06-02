@@ -117,5 +117,19 @@ namespace SpaydParserLib.Test
             Assert.AreEqual(expected.BankAccount.Iban, result.BankAccount.Iban);
             Assert.AreEqual(expected.BankAccount.Bic, result.BankAccount.Bic);
         }
+
+        [TestMethod]
+        public void GetJson()
+        {
+            // Arrange
+            Sind sp = Sind.FromString("SID*1.0*ID:2001401154*DD:20140404*TP:9*AM:61189.00*VS:3310001054*VII:CZ25568736*INI:25568736*INR:25568736*VIR:CZ25568736*DUZP:20140404*DT:20140412*TB0:26492.70*T0:5563.47*TB1:25333.10*T1:3799.97*NTB:-0.24*CC:CZK*TD:0*SA:0*ACC:CZ9701000000007098760287+KOMBCZPP*X-SW:MoneyS5-1.7.1");
+            string expected = "{\"ProtocolVersion\":\"1.0\",\"Id\":\"2001401154\",\"IssuedDate\":\"2014-04-04T00:00:00\",\"Amount\":61189.0,\"TaxPerformance\":0,\"InvoiceType\":0,\"AdvancesSettlement\":false,\"Vs\":3310001054,\"IssuerVatIdentification\":\"CZ25568736\",\"IssuerIdentificationNumber\":\"25568736\",\"RecipientVatIdentification\":\"CZ25568736\",\"RecipientIdentificationNumber\":\"25568736\",\"TaxPerformanceDate\":\"2014-04-04T00:00:00\",\"TaxStatementDueDate\":null,\"DueDate\":\"2014-04-12T00:00:00\",\"TB0\":26492.7,\"T0\":5563.47,\"TB1\":25333.1,\"T1\":3799.97,\"TB2\":null,\"T2\":null,\"NTB\":-0.24,\"Currency\":\"CZK\",\"ExchangeRate\":null,\"ForeignCurrencyAmount\":1,\"BankAccount\":{\"AccountPrefix\":null,\"AccountNumber\":null,\"BankCode\":null,\"Iban\":\"CZ9701000000007098760287\",\"Bic\":\"KOMBCZPP\"},\"Software\":\"MoneyS5-1.7.1\",\"Url\":null}";
+
+            // Act
+            var result = sp.GetJson();
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
     }
 }
