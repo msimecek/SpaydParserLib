@@ -24,10 +24,10 @@ namespace SpaydParserLib.Test
         }
 
         [Test]
-        public void TryGetId_WhenEmpty()
+        public void TryGetId_WhenNullOrEmpty([Values(null, "")] string value)
         {
             // Arrange
-            SindParser parser = new SindParser(CreateTestCase("ID", ""));
+            SindParser parser = new SindParser(CreateTestCase("ID", value));
 
             // Act
             var id = parser.TryGetId();
@@ -64,10 +64,10 @@ namespace SpaydParserLib.Test
         }
 
         [Test]
-        public void TryGetIssuedDate_WhenEmpty()
+        public void TryGetIssuedDate_WhenNullOrEmpty([Values(null, "")] string value)
         {
             // Arrange
-            SindParser parser = new SindParser(CreateTestCase("DD", ""));
+            SindParser parser = new SindParser(CreateTestCase("DD", value));
 
             // Act
             var result = parser.TryGetIssuedDate();
